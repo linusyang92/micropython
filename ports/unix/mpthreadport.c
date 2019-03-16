@@ -36,7 +36,15 @@
 
 #include <signal.h>
 #include <sched.h>
+#ifndef __APPLE__
 #include <semaphore.h>
+#else
+#include <dispatch/dispatch.h>
+typedef dispatch_semaphore_t sem_t;
+#define sem_init(psem,x,val) *psem = dispatch_semaphore_create(val)
+#define sem_post(psem) dispatch_semaphore_signal(*psem)
+#define sem_wait(psem) dispatch_semaphore_wait(*psem, DISPATCH_TIME_FOREVER)
+#endif
 
 // this structure forms a linked list, one node per active thread
 typedef struct _thread_t {

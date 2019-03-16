@@ -72,7 +72,11 @@ __attribute__((naked)) unsigned int nlr_push(nlr_buf_t *nlr) {
     ".align 2                   \n"
     "nlr_push_tail_var: .word nlr_push_tail \n"
 #else
+#ifndef __APPLE__
     "b      nlr_push_tail       \n" // do the rest in C
+#else
+    "b      _nlr_push_tail      \n" // do the rest in C
+#endif
 #endif
     );
 

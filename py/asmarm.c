@@ -44,7 +44,11 @@ void asm_arm_end_pass(asm_arm_t *as) {
         // flush I- and D-cache
         asm volatile(
                 "0:"
+#ifndef __clang__
                 "mrc p15, 0, r15, c7, c10, 3\n"
+#else
+                "mrc p15, 0, apsr_nzcv, c7, c10, 3\n"
+#endif
                 "bne 0b\n"
                 "mov r0, #0\n"
                 "mcr p15, 0, r0, c7, c7, 0\n"

@@ -1,0 +1,11 @@
+Package: com.linusyang.mpython
+Name: MicroPython
+Section: Development
+Author: MicroPython project
+Maintainer: Linus Yang
+Installed-Size: INSTSIZE
+Architecture: iphoneos-arm
+Version: 1.10-1
+Description: a lean and efficient Python 3.x implementation for microcontrollers and constrained systems
+Homepage: https://micropython.org
+Tag: purpose::console

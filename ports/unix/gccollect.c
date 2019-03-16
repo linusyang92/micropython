@@ -102,6 +102,8 @@ STATIC void gc_helper_get_regs(regs_t arr) {
 
 typedef mp_uint_t regs_t[10];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuninitialized"
 STATIC void gc_helper_get_regs(regs_t arr) {
     register long r4 asm ("r4");
     register long r5 asm ("r5");
@@ -124,6 +126,7 @@ STATIC void gc_helper_get_regs(regs_t arr) {
     arr[8] = r12;
     arr[9] = r13;
 }
+#pragma clang diagnostic pop
 
 #else
 

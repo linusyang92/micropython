@@ -44,6 +44,11 @@
 #define USE_STATFS 1
 #endif
 
+#ifdef __APPLE__
+#include <spawn.h>
+#include <TargetConditionals.h>
+#endif
+
 STATIC mp_obj_t mod_os_stat(mp_obj_t path_in) {
     struct stat sb;
     const char *path = mp_obj_str_get_str(path_in);
@@ -126,7 +131,17 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_1(mod_os_remove_obj, mod_os_remove);
 STATIC mp_obj_t mod_os_system(mp_obj_t cmd_in) {
     const char *cmd = mp_obj_str_get_str(cmd_in);
 
+#ifndef TARGET_OS_IPHONE
     int r = system(cmd);
+#else
+    extern char **environ;
+    pid_t pid;
+    char *argv[] = {"sh", "-c", (char *)cmd, NULL};
+    int r = posix_spawn(&pid, "/bin/sh", NULL, NULL, argv, environ);
+    if (r == 0) {
+        waitpid(pid, &r, 0);
+    }
+#endif
 
     RAISE_ERRNO(r, errno);
 

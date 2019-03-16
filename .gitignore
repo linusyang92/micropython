@@ -42,3 +42,9 @@ user.props
 # Generated rst files
 ######################
 genrst/
+
+# macOS files
+######################
+*.DS_Store
+iphone/layout
+*.deb

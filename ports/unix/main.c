@@ -68,7 +68,7 @@ STATIC void stderr_print_strn(void *env, const char *str, size_t len) {
     (void)dummy;
 }
 
-const mp_print_t mp_stderr_print = {NULL, stderr_print_strn};
+const mp_print_t mp_stderr_print = {NULL, (mp_print_strn_t)stderr_print_strn};
 
 #define FORCED_EXIT (0x100)
 // If exc is SystemExit, return value where FORCED_EXIT bit set,

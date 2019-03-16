@@ -52,7 +52,7 @@ STATIC void stderr_print_strn(void *env, const char *str, mp_uint_t len) {
     (void)dummy;
 }
 
-STATIC const mp_print_t mp_stderr_print = {NULL, stderr_print_strn};
+STATIC const mp_print_t mp_stderr_print = {NULL, (mp_print_strn_t)stderr_print_strn};
 
 STATIC int compile_and_save(const char *file, const char *output_file, const char *source_file) {
     nlr_buf_t nlr;
